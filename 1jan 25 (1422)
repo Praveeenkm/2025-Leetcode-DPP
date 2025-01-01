@@ -1,5 +1,6 @@
 2025-Leetcode-DPP
-#python
+#c++
+
 class Solution {
 public:
     int maxScore(string s) {
