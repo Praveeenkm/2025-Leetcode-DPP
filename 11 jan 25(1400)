@@ -1,0 +1,14 @@
+#Python
+class Solution:
+    def canConstruct(self, s: str, k: int) -> bool:
+        if len(s) < k:
+            return False
+
+        # Step-1: Count character frequencies
+        from collections import Counter
+        freq = Counter(s)
+
+        # Step-2: Count odd frequency characters
+        odd_freq = sum(1 for count in freq.values() if count % 2 != 0)
+
+        return odd_freq <= k
