@@ -1,0 +1,36 @@
+# python 
+
+class Solution:
+    def canBeValid(self, s: str, locked: str) -> bool:
+        n = len(s)
+        if n % 2 != 0:
+            return False  # Odd length can't be balanced
+
+        opening, closing, wild_card = 0, 0, 0
+
+        for i in range(n):
+            if locked[i] == '0':
+                wild_card += 1
+            elif s[i] == '(':
+                opening += 1
+            else:
+                closing += 1
+
+            # Overbalanced ')' check
+            if wild_card < (closing - opening):
+                return False
+
+        opening, closing, wild_card = 0, 0, 0
+        for i in range(n - 1, -1, -1): 
+            if locked[i] == '0':
+                wild_card += 1
+            elif s[i] == '(':
+                opening += 1
+            else:
+                closing += 1
+
+            # Overbalanced '(' check
+            if wild_card < (opening - closing):
+                return False
+
+        return True
