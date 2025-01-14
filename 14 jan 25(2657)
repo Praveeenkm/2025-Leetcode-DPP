@@ -1,0 +1,22 @@
+#python
+
+class Solution:
+    def findThePrefixCommonArray(self, A, B):
+        n = len(A)
+        common_set = set()  # To keep track of common elements seen so far
+        seen_A = set()  # Elements seen in A
+        seen_B = set()  # Elements seen in B
+        result = []
+
+        for i in range(n):
+            # Add current elements from A and B to respective sets
+            seen_A.add(A[i])
+            seen_B.add(B[i])
+
+            # Update the common set with intersection of seen elements
+            common_set = seen_A & seen_B
+            
+            # Append the count of common elements to the result
+            result.append(len(common_set))
+
+        return result
