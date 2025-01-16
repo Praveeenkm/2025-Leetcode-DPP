@@ -1,0 +1,19 @@
+#python
+
+class Solution:
+    def xorAllNums(self, nums1, nums2):
+        ans = 0
+
+        # Find contribution by first array elements
+        m = len(nums2)
+        if m % 2 == 1:
+            for ele in nums1:
+                ans ^= ele
+
+        # Find contribution by second array elements
+        n = len(nums1)
+        if n % 2 == 1:
+            for ele in nums2:
+                ans ^= ele
+
+        return ans
