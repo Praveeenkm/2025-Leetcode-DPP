@@ -1,0 +1,49 @@
+#python 
+
+import heapq
+
+class Solution:
+    def minCost(self, grid):
+        rows, cols = len(grid), len(grid[0])
+        directions = {
+            1: (0, 1),   # Right
+            2: (0, -1),  # Left
+            3: (1, 0),   # Down
+            4: (-1, 0)   # Up
+        }
+        
+        # Priority queue for BFS: (cost, row, col)
+        pq = [(0, 0, 0)]
+        visited = [[False] * cols for _ in range(rows)]
+        
+        while pq:
+            cost, r, c = heapq.heappop(pq)
+            
+            # If we've reached the bottom-right corner, return the cost
+            if (r, c) == (rows - 1, cols - 1):
+                return cost
+            
+            # Skip if already visited
+            if visited[r][c]:
+                continue
+            visited[r][c] = True
+            
+            # Explore all possible directions
+            for dir_code, (dr, dc) in directions.items():
+                nr, nc = r + dr, c + dc
+                if 0 <= nr < rows and 0 <= nc < cols:
+                    # If the current direction matches the arrow, no cost to follow it
+                    new_cost = cost if grid[r][c] == dir_code else cost + 1
+                    heapq.heappush(pq, (new_cost, nr, nc))
+        
+        return -1  # This line should not be reached
+
+# Example usage
+grid1 = [[1, 1, 1, 1], [2, 2, 2, 2], [1, 1, 1, 1], [2, 2, 2, 2]]
+grid2 = [[1, 1, 3], [3, 2, 2], [1, 1, 4]]
+grid3 = [[1, 2], [4, 3]]
+
+solution = Solution()
+print(solution.minCost(grid1))  # Output: 3
+print(solution.minCost(grid2))  # Output: 0
+print(solution.minCost(grid3))  # Output: 1
