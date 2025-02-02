@@ -1,0 +1,38 @@
+#Python
+
+
+from typing import List
+
+class Solution:
+    def check(self, nums: List[int]) -> bool:
+        n = len(nums)
+        if n == 1:
+            return True
+
+        # Step-1: Skip the 1st non-decreasing curve
+        pos = 1
+        while pos < n and nums[pos] >= nums[pos - 1]:
+            pos += 1
+
+        if pos == n:
+            return True  # If entire array is still non-decreasing
+        if nums[pos] > nums[0]:
+            return False  # Checking if start of new curve is NOT smallest
+        if pos == n - 1:
+            return True
+
+        # Step-2: Check the 2nd non-decreasing curve with adjacent & nums[0] value
+        pos += 1
+        while pos < n and nums[pos] <= nums[0] and nums[pos] >= nums[pos - 1]:
+            pos += 1
+
+        return pos == n
+
+*/
+@Praveeenkm
+Comment
+ 
+Leave a comment
+ 
+Footer
+©
