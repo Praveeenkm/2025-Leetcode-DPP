@@ -1,0 +1,21 @@
+#Python
+
+
+from collections import defaultdict
+
+class Solution:
+    def countBadPairs(self, nums):
+        n = len(nums)
+        
+        # Insert & Count matches and add freq where (nums[i] - i) == (nums[j] - j)
+        freq = defaultdict(int)
+        good_pairs = 0
+        
+        for i in range(n):
+            key = nums[i] - i
+            if key in freq:
+                good_pairs += freq[key]
+            freq[key] += 1
+        
+        bad_pairs = n * (n - 1) // 2 - good_pairs
+        return bad_pairs
