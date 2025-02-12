@@ -1,0 +1,27 @@
+#Python
+
+from typing import List
+from collections import defaultdict
+
+class Solution:
+    def getDigitSum(self, val: int) -> int:
+        sum = 0
+        while val:
+            sum += val % 10
+            val //= 10
+        return sum
+
+    def maximumSum(self, nums: List[int]) -> int:
+        sum_maxval = defaultdict(int)
+        max_sum = -1
+
+        for ele in nums:
+            digit_sum = self.getDigitSum(ele)
+            if digit_sum in sum_maxval:
+                max_sum = max(max_sum, ele + sum_maxval[digit_sum])
+                if sum_maxval[digit_sum] < ele:
+                    sum_maxval[digit_sum] = ele
+            else:
+                sum_maxval[digit_sum] = ele
+
+        return max_sum
