@@ -1,0 +1,21 @@
+#Python
+#//Solution-1: Kadane's Algorithm
+class Solution:
+    def maxSumSubarrayKadanes(self, nums: list[int]) -> int:
+        max_sum = float('-inf')
+        curr_sum = 0
+        for num in nums:
+            curr_sum += num
+            max_sum = max(max_sum, curr_sum)
+            if curr_sum < 0:
+                curr_sum = 0
+        return max_sum
+
+    def maxAbsoluteSum(self, nums: list[int]) -> int:
+        max_sum_subarray = self.maxSumSubarrayKadanes(nums)
+
+        # Flip all signs
+        nums = [-num for num in nums]
+
+        min_sum_subarray = self.maxSumSubarrayKadanes(nums)
+        return max(max_sum_subarray, min_sum_subarray)
