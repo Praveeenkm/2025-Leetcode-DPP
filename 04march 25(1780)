@@ -1,0 +1,9 @@
+#Python
+class Solution:
+    def checkPowersOfThree(self, n: int) -> bool:
+        # All the digits of base-3 number must be either 0 or 1
+        while n > 0:
+            if n % 3 == 2:
+                return False
+            n //= 3
+        return True
