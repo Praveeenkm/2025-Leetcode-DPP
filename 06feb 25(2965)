@@ -1,0 +1,27 @@
+#Python
+
+from typing import List
+
+class Solution:
+    def findMissingAndRepeatedValues(self, grid: List[List[int]]) -> List[int]:
+        repeating, missing = 0, 0
+        n = len(grid)
+        
+        for i in range(n):
+            for j in range(n):
+                curr = abs(grid[i][j])
+                row = (curr - 1) // n
+                col = (curr - 1) % n
+                
+                if grid[row][col] < 0:
+                    repeating = abs(curr)
+                else:
+                    grid[row][col] *= -1
+        
+        for i in range(n):
+            for j in range(n):
+                if grid[i][j] > 0:
+                    missing = i * n + (j + 1)
+                    break
+        
+        return [repeating, missing]
