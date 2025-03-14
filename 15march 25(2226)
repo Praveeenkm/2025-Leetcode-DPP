@@ -1,0 +1,26 @@
+#Python
+from typing import List
+
+class Solution:
+    def canAssign(self, mid: int, candies: List[int], k: int) -> bool:
+        count = 0
+        for ele in candies:
+            if ele >= mid:
+                count += ele // mid
+        return count >= k
+
+    def maximumCandies(self, candies: List[int], k: int) -> int:
+        low = 1
+        high = max(candies)
+        max_candies = 0
+
+        # Binary search on the range of possible answers
+        while low <= high:
+            mid = low + (high - low) // 2
+            if self.canAssign(mid, candies, k):
+                max_candies = max(max_candies, mid)
+                low = mid + 1
+            else:
+                high = mid - 1
+
+        return max_candies
