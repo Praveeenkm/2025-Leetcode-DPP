@@ -1,0 +1,22 @@
+class Solution:
+    def maximumTripletValue(self, nums):
+        n = len(nums)
+        max_left = nums[0]  # Track the maximum nums[i]
+        max_right = [0] * n  # Store the maximum nums[k] from the right
+        
+        # Build suffix maximum array
+        max_right[n - 1] = nums[n - 1]
+        for k in range(n - 2, -1, -1):
+            max_right[k] = max(max_right[k + 1], nums[k])
+        
+        max_value = 0  # Store the maximum triplet value
+        
+        # Iterate over the middle element nums[j]
+        for j in range(1, n - 1):
+            if max_left > nums[j]:  # Ensure (nums[i] - nums[j]) > 0
+                max_value = max(max_value, (max_left - nums[j]) * max_right[j + 1])
+            
+            # Update max_left for the next iteration
+            max_left = max(max_left, nums[j])
+        
+        return max_value
