@@ -1,0 +1,15 @@
+#Python
+class Solution:
+    MOD = 10**9 + 7
+
+    def binaryExponentiation(self, a: int, b: int) -> int:
+        res = 1
+        while b > 0:
+            if b & 1:
+                res = (res * a) % self.MOD
+            a = (a * a) % self.MOD
+            b >>= 1
+        return res
+
+    def countGoodNumbers(self, n: int) -> int:
+        return (self.binaryExponentiation(4, n // 2) * self.binaryExponentiation(5, n - n // 2)) % self.MOD
