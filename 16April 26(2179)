@@ -1,0 +1,48 @@
+class BIT:
+    def __init__(self, n):
+        self.tree = [0] * (n + 2)  # +2 to handle 0-indexing safely
+    
+    def update(self, i, val):
+        i += 1  # BIT is 1-indexed
+        while i < len(self.tree):
+            self.tree[i] += val
+            i += i & -i
+    
+    def query(self, i):
+        i += 1
+        res = 0
+        while i:
+            res += self.tree[i]
+            i -= i & -i
+        return res
+
+class Solution:
+    def goodTriplets(self, nums1, nums2):
+        n = len(nums1)
+        
+        # Map value to index in nums1
+        pos1 = {v: i for i, v in enumerate(nums1)}
+        
+        # Transform nums2 to position map of nums1
+        transformed = [pos1[v] for v in nums2]
+        
+        # BIT for counting elements to the left
+        bit1 = BIT(n)
+        leftSmaller = [0] * n
+        for i in range(n):
+            leftSmaller[i] = bit1.query(transformed[i] - 1)
+            bit1.update(transformed[i], 1)
+        
+        # BIT for counting elements to the right
+        bit2 = BIT(n)
+        rightGreater = [0] * n
+        for i in reversed(range(n)):
+            rightGreater[i] = bit2.query(n - 1) - bit2.query(transformed[i])
+            bit2.update(transformed[i], 1)
+        
+        # Total good triplets
+        total = 0
+        for i in range(n):
+            total += leftSmaller[i] * rightGreater[i]
+        
+        return total
