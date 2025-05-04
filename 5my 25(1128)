@@ -1,0 +1,14 @@
+#python
+from collections import defaultdict
+
+class Solution:
+    def numEquivDominoPairs(self, dominoes):
+        count = defaultdict(int)
+        res = 0
+
+        for a, b in dominoes:
+            key = tuple(sorted((a, b)))  # Normalize the domino
+            res += count[key]
+            count[key] += 1
+
+        return res
