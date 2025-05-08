@@ -1,0 +1,28 @@
+#python import heapq
+import math
+
+class Solution:
+    def minTimeToReach(self, moveTime):
+        m, n = len(moveTime), len(moveTime[0])
+        dist = [[[math.inf] * 2 for _ in range(n)] for _ in range(m)]
+        dist[0][0][0] = 0
+        heap = [(0, 0, 0, 0)]  # (time, x, y, parity)
+
+        directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+
+        while heap:
+            time, x, y, parity = heapq.heappop(heap)
+            if (x, y) == (m - 1, n - 1):
+                return time
+            if time > dist[x][y][parity]:
+                continue
+            for dx, dy in directions:
+                nx, ny = x + dx, y + dy
+                if 0 <= nx < m and 0 <= ny < n:
+                    move_cost = 1 if parity == 0 else 2
+                    next_time = max(time, moveTime[nx][ny]) + move_cost
+                    next_parity = 1 - parity
+                    if next_time < dist[nx][ny][next_parity]:
+                        dist[nx][ny][next_parity] = next_time
+                        heapq.heappush(heap, (next_time, nx, ny, next_parity))
+        return -1
