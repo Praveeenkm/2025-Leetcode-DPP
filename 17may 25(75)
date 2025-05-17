@@ -1,0 +1,14 @@
+class Solution {
+public:
+    void sortColors(vector<int>& nums) {
+        // int arr();
+        // int beg,mid,key;
+        // if(beg>=mid)
+        // end--;
+        // elseif(beg<=mid)
+        // beg++;
+        // arr.sort()
+        // cout<<"the array to be sorted is";
+        sort(nums.begin(),nums.end());        
+    }
+};
