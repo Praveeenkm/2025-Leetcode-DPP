@@ -1,0 +1,19 @@
+#python from typing import List
+
+class Solution:
+    def maximumValueSum(self, nums: List[int], k: int, edges: List[List[int]]) -> int:
+        maxSum = 0
+        count = 0
+        minChangeDiff = float('inf')
+
+        for num in nums:
+            xor_val = num ^ k
+            maxSum += max(num, xor_val)
+            if xor_val > num:
+                count += 1
+            minChangeDiff = min(minChangeDiff, abs(num - xor_val))
+
+        if count % 2 == 0:
+            return maxSum
+        else:
+            return maxSum - minChangeDiff
