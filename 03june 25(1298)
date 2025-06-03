@@ -1,0 +1,43 @@
+#python
+from collections import deque
+
+class Solution:
+    def maxCandies(self, status, candies, keys, containedBoxes, initialBoxes):
+        n = len(status)
+        visited = [False] * n
+        has_key = set()
+        owned_boxes = set(initialBoxes)
+        queue = deque()
+        total_candies = 0
+
+        # Initially push all open boxes we have
+        for box in initialBoxes:
+            if status[box] == 1:
+                queue.append(box)
+
+        while queue:
+            box = queue.popleft()
+            if visited[box]:
+                continue
+            visited[box] = True
+
+            # Collect candies
+            total_candies += candies[box]
+
+            # Get keys and add new accessible boxes
+            for key in keys[box]:
+                has_key.add(key)
+                if key in owned_boxes and not visited[key] and status[key] == 0:
+                    status[key] = 1
+                    queue.append(key)
+
+            # Add contained boxes
+            for new_box in containedBoxes[box]:
+                owned_boxes.add(new_box)
+                if status[new_box] == 1 and not visited[new_box]:
+                    queue.append(new_box)
+                elif new_box in has_key:
+                    status[new_box] = 1
+                    queue.append(new_box)
+
+        return total_candies
