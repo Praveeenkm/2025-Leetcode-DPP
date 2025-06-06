@@ -1,0 +1,27 @@
+#python
+class Solution:
+    def robotWithString(self, s: str) -> str:
+        from collections import Counter
+        
+        cnt = Counter(s)
+        stk = []
+        res = []
+        mi = 'a'  # smallest character we still expect in s
+        
+        for c in s:
+            cnt[c] -= 1
+            # Update mi to the next character that still appears in the remaining s
+            while mi <= 'z' and cnt[mi] == 0:
+                mi = chr(ord(mi) + 1)
+            
+            stk.append(c)
+            
+            # Pop from stack to result while it's <= current mi
+            while stk and stk[-1] <= mi:
+                res.append(stk.pop())
+        
+        # Append any leftover characters in reverse (stack unwind)
+        while stk:
+            res.append(stk.pop())
+        
+        return "".join(res)
