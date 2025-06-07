@@ -1,0 +1,19 @@
+#python
+class Solution:
+    def clearStars(self, s: str) -> str:
+        ans = list(s)
+        buckets = [[] for _ in range(26)]  # one bucket (stack of indices) per letter
+
+        for i, c in enumerate(s):
+            if c == '*':
+                ans[i] = ''  # remove the star
+                # find smallest letter bucket with at least one character
+                for j in range(26):
+                    if buckets[j]:
+                        idx = buckets[j].pop()  # remove rightmost smallest char
+                        ans[idx] = ''           # delete that character
+                        break
+            else:
+                buckets[ord(c) - ord('a')].append(i)
+
+        return ''.join(ans)
