@@ -1,0 +1,23 @@
+#python class Solution:
+    def findKthNumber(self, n: int, k: int) -> int:
+        def count_steps(prefix, n):
+            steps = 0
+            first = prefix
+            last = prefix
+            while first <= n:
+                steps += min(last, n) - first + 1
+                first *= 10
+                last = last * 10 + 9
+            return steps
+
+        current = 1
+        k -= 1
+        while k > 0:
+            steps = count_steps(current, n)
+            if steps <= k:
+                current += 1
+                k -= steps
+            else:
+                current *= 10
+                k -= 1
+        return current
