@@ -1,0 +1,21 @@
+#python
+
+from collections import Counter
+
+class Solution:
+    def maxDifference(self, s: str) -> int:
+        freq = Counter(s)
+
+        max_odd = 0
+        min_even = len(s)
+
+        for count in freq.values():
+            if count == 0:
+                continue
+            if count % 2 == 1:
+                max_odd = max(max_odd, count)
+            else:
+                min_even = min(min_even, count)
+
+        # At least one odd and one even exists per problem constraints
+        return max_odd - min_even
