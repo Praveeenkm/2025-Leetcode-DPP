@@ -1,0 +1,27 @@
+#python
+class Solution:
+    def maxDiff(self, num: int) -> int:
+        s = list(str(num))
+        
+        # Step 1: Find max number by replacing the first digit that is not 9
+        for ch in s:
+            if ch != '9':
+                max_num = int("".join([c if c != ch else '9' for c in s]))
+                break
+        else:
+            max_num = num  # All digits are 9
+
+        # Step 2: Find min number
+        if s[0] != '1':
+            ch = s[0]
+            min_num = int("".join(['1' if c == ch else c for c in s]))
+        else:
+            for i in range(1, len(s)):
+                if s[i] not in ['0', '1']:
+                    ch = s[i]
+                    min_num = int("".join([c if c != ch else '0' for c in s]))
+                    break
+            else:
+                min_num = num  # All digits are 0 or 1
+
+        return max_num - min_num
