@@ -1,0 +1,24 @@
+#python
+
+class Solution:
+    def maxDistance(self, s: str, k: int) -> int:
+        ans = 0
+        # Counters for each direction so far
+        N = S = E = W = 0
+
+        for i, ch in enumerate(s):
+            if ch == 'N': N += 1
+            elif ch == 'S': S += 1
+            elif ch == 'E': E += 1
+            elif ch == 'W': W += 1
+
+            # Ideal strategy: cancel opposing directions first, using up to k changes
+            useV = min(k, N, S)         # vertical cancellations
+            useH = min(k - useV, E, W)  # horizontal cancellations
+
+            vert = abs(N - S) + 2 * useV
+            horz = abs(E - W) + 2 * useH
+
+            ans = max(ans, vert + horz)
+
+        return ans
