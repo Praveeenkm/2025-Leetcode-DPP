@@ -1,0 +1,22 @@
+#python
+
+from collections import Counter
+
+class Solution:
+    def minimumDeletions(self, word: str, k: int) -> int:
+        freq = list(Counter(word).values())
+        freq.sort()
+        res = float('inf')
+        n = len(freq)
+
+        for i in range(n):
+            target = freq[i]  # try to make all remaining frequencies near this
+            deletions = 0
+            for f in freq:
+                if f < target:
+                    deletions += f  # remove whole character
+                elif f > target + k:
+                    deletions += f - (target + k)  # reduce down to target+k
+            res = min(res, deletions)
+
+        return res
