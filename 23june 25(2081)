@@ -1,0 +1,51 @@
+#python
+
+class Solution:
+    def is_palindrome(self, s):
+        return s == s[::-1]
+    
+    def to_base_k(self, num, k):
+        if num == 0:
+            return "0"
+        digits = []
+        while num:
+            digits.append(int(num % k))
+            num //= k
+        return "".join(str(d) for d in digits[::-1])
+    
+    def generate_palindromes_by_length(self, length):
+        palindromes = []
+        if length == 1:
+            for i in range(1, 10):
+                palindromes.append(i)
+        else:
+            half_length = (length + 1) // 2
+            start = 10 ** (half_length - 1)
+            end = 10 ** half_length
+            for i in range(start, end):
+                s = str(i)
+                # Odd length: exclude last digit for reverse
+                if length % 2 == 1:
+                    palindrome = int(s + s[-2::-1])
+                # Even length: include all digits
+                else:
+                    palindrome = int(s + s[::-1])
+                palindromes.append(palindrome)
+        return palindromes
+    
+    def kMirror(self, k: int, n: int) -> int:
+        k_mirror_numbers = []
+        max_length = 12  # Sufficient for all test cases
+        
+        # Generate palindromes by length incrementally
+        for length in range(1, max_length + 1):
+            palindromes = self.generate_palindromes_by_length(length)
+            for num in palindromes:
+                base_k = self.to_base_k(num, k)
+                if self.is_palindrome(base_k):
+                    k_mirror_numbers.append(num)
+                if len(k_mirror_numbers) >= n:
+                    return sum(k_mirror_numbers[:n])
+        
+        # If we reach here, return sum of available numbers (unlikely due to constraints)
+        return sum(k_mirror_numbers[:n])
