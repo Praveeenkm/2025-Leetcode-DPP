@@ -1,0 +1,25 @@
+#python
+
+class Solution:
+    def longestSubsequence(self, s: str, k: int) -> int:
+        count = 0        # Final count of subsequence length
+        value = 0        # Binary value being formed
+        power = 1        # 2^i value from right to left
+
+        # First, include all '0's (they don’t change value)
+        count = s.count('0')
+
+        # Traverse from right to left
+        for i in range(len(s) - 1, -1, -1):
+            if s[i] == '1':
+                # Try to include this 1 if it doesn't exceed k
+                if power <= k - value:
+                    value += power
+                    count += 1
+                # Update power for next bit
+            power *= 2
+            # If power exceeds k, break (no point including higher bits)
+            if power > k:
+                break
+
+        return count
