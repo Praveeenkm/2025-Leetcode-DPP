@@ -1,0 +1,17 @@
+#python
+class Solution:
+    def maxSubsequence(self, nums, k):
+        # Pair each element with its index
+        indexed_nums = list(enumerate(nums))
+        
+        # Sort based on values in descending order to pick largest k values
+        indexed_nums.sort(key=lambda x: x[1], reverse=True)
+        
+        # Pick the top k elements (value and index)
+        top_k = indexed_nums[:k]
+        
+        # Sort top k elements back by original index to maintain subsequence order
+        top_k.sort(key=lambda x: x[0])
+        
+        # Return just the values
+        return [x[1] for x in top_k]
