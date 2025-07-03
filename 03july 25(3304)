@@ -1,0 +1,14 @@
+#python
+
+class Solution:
+    def kthCharacter(self, k: int) -> str:
+        word = "a"
+
+        def shift_char(c):
+            return chr((ord(c) - ord('a') + 1) % 26 + ord('a'))
+
+        while len(word) < k:
+            new_part = ''.join(shift_char(c) for c in word)
+            word += new_part
+
+        return word[k - 1]
